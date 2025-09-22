@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
   template: `
   <mat-sidenav-container class="container">
     <mat-sidenav mode="side" opened class="sidenav">
-      <div class="brand">UserMgmt</div>
+      <div class="brand">User Management</div>
       <mat-nav-list>
         <a mat-list-item routerLink="/users" routerLinkActive="active"><mat-icon>people</mat-icon>&nbsp;Users</a>
         <a mat-list-item routerLink="/groups" routerLinkActive="active"><mat-icon>group_work</mat-icon>&nbsp;Groups</a>

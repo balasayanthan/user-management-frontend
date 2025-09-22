@@ -7,17 +7,19 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
+const REPORTS_PAGE_IMPORTS = [
+  CommonModule,
+  FormsModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSlideToggleModule,
+  MatButtonModule
+];
+
 @Component({
   standalone: true,
   selector: 'app-reports-page',
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSlideToggleModule,
-    MatButtonModule
-  ],
+  imports: REPORTS_PAGE_IMPORTS,
   template: `
   <div class="row">
     <mat-slide-toggle [(ngModel)]="permission">Permission = true</mat-slide-toggle>
