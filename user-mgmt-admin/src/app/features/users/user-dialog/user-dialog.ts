@@ -16,33 +16,8 @@ type DialogData = { mode: 'create' } | { mode: 'edit', row: User };
   standalone: true,
   selector: 'app-user-dialog',
   imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
-  template: `
-  <h2 mat-dialog-title>{{ data.mode === 'create' ? 'Create User' : 'Edit User' }}</h2>
-  <div mat-dialog-content [formGroup]="form">
-    <mat-form-field appearance="outline"><mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName" />
-    </mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName" />
-    </mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email" />
-    </mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>Group</mat-label>
-      <mat-select formControlName="userGroupId">
-        <mat-option *ngFor="let g of groups" [value]="g.id">{{g.groupName}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>Attached Customer Id</mat-label>
-      <input matInput type="number" formControlName="attachedCustomerId" />
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions align="end">
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">{{ data.mode === 'create' ? 'Create' : 'Save' }}</button>
-  </div>
-  `,
-  styles:[`mat-form-field{width:100%;display:block;margin-bottom:12px;}`]
+  templateUrl: './user-dialog.html',
+  styleUrls: ['./user-dialog.scss']
 })
 export class UserDialog implements OnInit {
   private fb = inject(FormBuilder);
@@ -50,7 +25,7 @@ export class UserDialog implements OnInit {
   private groupsSvc = inject(GroupsService);
   groups: Group[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private ref: MatDialogRef<UserDialog>) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private ref: MatDialogRef<UserDialog>) { }
 
   form = this.fb.group({
     firstName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -72,7 +47,7 @@ export class UserDialog implements OnInit {
   }
   isEdit(): this is { data: { mode: 'edit', row: User } } { return this.data.mode === 'edit'; }
 
-  save(){
+  save() {
     if (this.form.invalid) return;
     const dto = this.form.value as unknown as CreateUser;
     if (this.data.mode === 'create') {
@@ -81,5 +56,5 @@ export class UserDialog implements OnInit {
       this.users.update(this.data.row.id, dto).subscribe(() => this.ref.close(true));
     }
   }
-  close(){ this.ref.close(false); }
+  close() { this.ref.close(false); }
 }

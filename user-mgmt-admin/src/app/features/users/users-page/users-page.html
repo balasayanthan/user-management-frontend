@@ -1,1 +1,41 @@
-<p>users-page works!</p>
+<div class="header">
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput [formControl]="searchCtrl" placeholder="name or email" />
+  </mat-form-field>
+  <span class="spacer"></span>
+  <button mat-flat-button color="primary" (click)="openCreate()">
+    <mat-icon>add</mat-icon> New User
+  </button>
+</div>
+
+<table mat-table [dataSource]="rows()">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let r">{{r.firstName}} {{r.lastName}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let r">{{r.email}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="group">
+    <th mat-header-cell *matHeaderCellDef>Group</th>
+    <td mat-cell *matCellDef="let r">{{r.groupName}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let r">
+      <button mat-icon-button (click)="openEdit(r)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="remove(r)"><mat-icon>delete</mat-icon></button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayed"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayed;"></tr>
+</table>
+
+<mat-paginator [length]="total()" [pageSize]="pageSize()" [pageIndex]="page()-1"
+  (page)="pageChange($event)"></mat-paginator>
