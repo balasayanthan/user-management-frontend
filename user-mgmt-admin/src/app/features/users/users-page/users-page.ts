@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component,effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UsersService } from '../../../core/services/users.service';
-import { GroupsService } from '../../../core/services/groups.service';
 import { User } from '../../../core/models';
 import { UserDialog } from '../user-dialog/user-dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,49 +17,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
   standalone: true,
   selector: 'app-users-page',
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatDialogModule, ReactiveFormsModule],
-  template: `
-  <div class="header">
-    <mat-form-field appearance="outline">
-      <mat-label>Search</mat-label>
-      <input matInput [formControl]="searchCtrl" placeholder="name or email" />
-    </mat-form-field>
-    <span class="spacer"></span>
-    <button mat-flat-button color="primary" (click)="openCreate()">
-      <mat-icon>add</mat-icon> New User
-    </button>
-  </div>
-
-  <table mat-table [dataSource]="rows()">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let r">{{r.firstName}} {{r.lastName}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let r">{{r.email}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="group">
-      <th mat-header-cell *matHeaderCellDef>Group</th>
-      <td mat-cell *matCellDef="let r">{{r.groupName}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let r">
-        <button mat-icon-button (click)="openEdit(r)"><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button color="warn" (click)="remove(r)"><mat-icon>delete</mat-icon></button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayed"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayed;"></tr>
-  </table>
-
-  <mat-paginator [length]="total()" [pageSize]="pageSize()" [pageIndex]="page()-1"
-                 (page)="pageChange($event)"></mat-paginator>
-  `,
+  templateUrl: './users-page.html',
   styles: [`
     .header{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
     .spacer{ flex:1 1 auto; }
@@ -74,7 +31,6 @@ export class UsersPage {
 
   displayed = ['name','email','group','actions'];
 
-  // state (signals)
   page = signal(1);
   pageSize = signal(10);
   total = signal(0);

@@ -1,1 +1,16 @@
-<p>reports-page works!</p>
+<div *ngIf="!envAuthEnabled()" class="warn">
+  Authorization disabled in environment (Auth.Enabled=false). Reports may return 401.
+</div>
+<div *ngIf="envAuthEnabled() && !envTokenSet()" class="warn">
+  Auth enabled but token is empty – set environment.auth.token
+</div>
+<div class="row">
+  <mat-slide-toggle [(ngModel)]="permission">Permission = true</mat-slide-toggle>
+  <mat-form-field appearance="outline"><mat-label>Rule Name</mat-label>
+    <input matInput [(ngModel)]="ruleName" placeholder="e.g., CanViewReports" />
+  </mat-form-field>
+  <button mat-flat-button color="primary" (click)="run()">Run</button>
+</div>
+<ul>
+  <li *ngFor="let n of names()">{{ n }}</li>
+</ul>

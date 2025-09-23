@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.warn {
+  background: #fff3cd;
+  color: #664d03;
+  padding: 8px 12px;
+  border: 1px solid #ffe69c;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}

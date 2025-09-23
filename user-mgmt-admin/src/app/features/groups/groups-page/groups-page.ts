@@ -13,24 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   selector: 'app-groups-page',
   imports: [CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
-  template: `
-  <div class="row">
-    <mat-form-field appearance="outline">
-      <mat-label>New Group</mat-label>
-      <input matInput [formControl]="nameCtrl" placeholder="e.g., Admins" />
-    </mat-form-field>
-    <button mat-flat-button color="primary" (click)="create()" [disabled]="nameCtrl.invalid">Add</button>
-  </div>
-  <table mat-table [dataSource]="rows()">
-    <ng-container matColumnDef="groupName">
-      <th mat-header-cell *matHeaderCellDef>Group Name</th>
-      <td mat-cell *matCellDef="let g">{{g.groupName}}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayed"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayed;"></tr>
-  </table>
-  `,
-  styles:[`.row{display:flex; gap:12px; align-items:center; margin-bottom:12px;} table{width:100%}`]
+  templateUrl: './groups-page.html',
+  styleUrls: ['./groups-page.scss']
 })
 export class GroupsPage {
   private groups = inject(GroupsService);
